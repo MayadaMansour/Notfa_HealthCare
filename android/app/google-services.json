@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1037032888463",
+    "project_id": "notfa-cd2e2",
+    "storage_bucket": "notfa-cd2e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037032888463:android:3a96ee66b4549a74ed38fa",
+        "android_client_info": {
+          "package_name": "com.notfa.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDCfblNY1fN5LPvA3pocMYcE_N4Gq3bSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
