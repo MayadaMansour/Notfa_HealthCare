@@ -5,7 +5,6 @@ const APP_NAME_TAG_LINE = 'Clinic and Patient Management App';
 
 
 //LIVE
-// const DOMAIN_URL = 'https://notfa.care';
 const DOMAIN_URL = 'https://notfa.care';
 
 const BASE_URL = '$DOMAIN_URL/wp-json/';
