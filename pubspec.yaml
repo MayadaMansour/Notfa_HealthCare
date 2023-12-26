@@ -96,6 +96,6 @@ flutter:
     - images/flags/
     - images/filesFormat/
 
-https://gitlab:
-  com/gmits_mobile/service-provider-app/provider_flutter:
-    git:
+#https://gitlab:
+  #com/gmits_mobile/service-provider-app/provider_flutter:
+    #git:

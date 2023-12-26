@@ -73,9 +73,6 @@ void main() async {
   appButtonBackgroundColorGlobal = primaryColor;
 
   defaultAppButtonTextColorGlobal = Colors.white;
-  defaultAppButtonElevation = 0.0;
-  passwordLengthGlobal = 5;
-  defaultRadius = 12;
   defaultLoaderAccentColorGlobal = primaryColor;
 
   await initialize(aLocaleLanguageList: languageList());
