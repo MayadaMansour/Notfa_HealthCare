@@ -304,7 +304,7 @@ class LanguageEn extends BaseLanguage {
   String get lblPatientList => "Patient's List";
 
   @override
-  String get lblBillSwipe => "Swipe left to edit quantity or delete sevice from bill";
+  String get lblBillSwipe => "Swipe left to edit quantity or delete service from bill";
 
   @override
   String get lblViewDoctorMsg => "Tap to view Doctor's profile";
@@ -1108,7 +1108,7 @@ class LanguageEn extends BaseLanguage {
   String get lblClinicTAndC => "Clinic T&C";
 
   @override
-  String get lblAboutKiviCare => "About Notfa";
+  String get lblAboutNotfa => "About Notfa";
 
   @override
   String get lblYourReviewCounts => "Your review counts";
@@ -1123,7 +1123,7 @@ class LanguageEn extends BaseLanguage {
   String get lblSubmitYourQueriesHere => "Submit your queries here";
 
   @override
-  String get lblShareKiviCare => "Share Notfa";
+  String get lblShareNotfa => "Share Notfa";
 
   @override
   String get lblLogout => "Logout";
@@ -1469,7 +1469,7 @@ class LanguageEn extends BaseLanguage {
   String get lblYouWillSeeAQRForAppOptionOnTheRightHandCorner => "You will see a QR for App option on the right hand corner, ";
 
   @override
-  String get lblEnjoyTheFlawlessKivicareSystemWithEase => "Enjoy! the flawless Notfa system with ease.";
+  String get lblEnjoyTheFlawlessNotfaSystemWithEase => "Enjoy! the flawless Notfa system with ease.";
 
   @override
   String get lblCamera => "Camera";
@@ -1648,14 +1648,14 @@ class LanguageEn extends BaseLanguage {
   @override
   String get lblFeb => "Feb";
 
-  @override
-  String get lblFrench => "French";
-
-  @override
-  String get lblGerman => "German";
-
-  @override
-  String get lblHindi => "Hindi";
+  // @override
+  // String get lblFrench => "French";
+  //
+  // @override
+  // String get lblGerman => "German";
+  //
+  // @override
+  // String get lblHindi => "Hindi";
 
   @override
   String get lblJan => "Jan";

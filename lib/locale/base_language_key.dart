@@ -292,7 +292,7 @@ abstract class BaseLanguage {
 
   String get lblClickOnThatAndScanItFromTheApp;
 
-  String get lblEnjoyTheFlawlessKivicareSystemWithEase;
+  String get lblEnjoyTheFlawlessNotfaSystemWithEase;
 
   String get lblRemoveImage;
 
@@ -422,11 +422,11 @@ abstract class BaseLanguage {
 
   String get lblArabic;
 
-  String get lblHindi;
+  // String get lblHindi;
 
-  String get lblGerman;
+  // String get lblGerman;
 
-  String get lblFrench;
+  // String get lblFrench;
 
   String get lblNoQualificationsFound;
 
@@ -1044,7 +1044,7 @@ abstract class BaseLanguage {
 
   String get lblClinicTAndC;
 
-  String get lblAboutKiviCare;
+  String get lblAboutNotfa;
 
   String get lblYourReviewCounts;
 
@@ -1054,7 +1054,7 @@ abstract class BaseLanguage {
 
   String get lblSubmitYourQueriesHere;
 
-  String get lblShareKiviCare;
+  String get lblShareNotfa;
 
   String get lblLogout;
 

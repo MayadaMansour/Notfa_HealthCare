@@ -38,7 +38,7 @@ class OtherSettingsComponent extends StatelessWidget {
           name: locale.lblAboutUs,
           image: ic_aboutUs,
           widget: AboutUsScreen(),
-          subTitle: locale.lblAboutKiviCare,
+          subTitle: locale.lblAboutNotfa,
         ),
         AppSettingWidget(
           name: locale.lblRateUs,
@@ -57,7 +57,7 @@ class OtherSettingsComponent extends StatelessWidget {
           },
         ),
         AppSettingWidget(
-          name: locale.lblShareKiviCare,
+          name: locale.lblShareNotfa,
           image: ic_share,
           subTitle: locale.lblReachUsMore,
           onTap: () async {

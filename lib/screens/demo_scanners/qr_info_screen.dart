@@ -94,7 +94,7 @@ class _QrInfoScreenState extends State<QrInfoScreen> {
               ],
             ),
             64.height,
-            Text(locale.lblEnjoyTheFlawlessKivicareSystemWithEase, style: primaryTextStyle(size: 20, color: primaryColor)),
+            Text(locale.lblEnjoyTheFlawlessNotfaSystemWithEase, style: primaryTextStyle(size: 20, color: primaryColor)),
           ],
         ),
       ),

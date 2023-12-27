@@ -98,7 +98,9 @@ void main() async {
     appStore.setDarkMode(true);
   }
 
+
   runApp(MyApp());
+
 }
 
 class MyApp extends StatefulWidget {

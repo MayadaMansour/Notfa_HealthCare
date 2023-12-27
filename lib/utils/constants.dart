@@ -31,9 +31,6 @@ List<LanguageDataModel> languageList() {
   return [
     LanguageDataModel(id: 0, name: locale.lblEnglish, languageCode: 'en', fullLanguageCode: 'en-US', flag: flagsIcUs),
     LanguageDataModel(id: 1, name: locale.lblArabic, languageCode: 'ar', fullLanguageCode: 'ar-AR', flag: flagsIcAr),
-    LanguageDataModel(id: 2, name: locale.lblHindi, languageCode: 'hi', fullLanguageCode: 'hi-IN', flag: flagsIcIndia),
-    LanguageDataModel(id: 3, name: locale.lblGerman, languageCode: 'de', fullLanguageCode: 'de-DE', flag: flagsIcGermany),
-    LanguageDataModel(id: 4, name: locale.lblFrench, languageCode: 'fr', fullLanguageCode: 'fr-FR', flag: flagsIcFrench),
   ];
 }
 
