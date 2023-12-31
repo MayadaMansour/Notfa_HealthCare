@@ -53,8 +53,8 @@ class _QrInfoScreenState extends State<QrInfoScreen> {
             16.height,
             RichTextWidget(
               list: [
-                TextSpan(text: APP_FIRST_NAME, style: boldTextStyle(size: 24, letterSpacing: 1)),
-                TextSpan(text: APP_SECOND_NAME, style: primaryTextStyle(size: 24, letterSpacing: 1)),
+                TextSpan(text: APP_FIRST_NAME, style: boldTextStyle(size: 24, )),
+                // TextSpan(text: APP_SECOND_NAME, style: primaryTextStyle(size: 24, letterSpacing: 1)),
               ],
             ),
             32.height,

@@ -18,8 +18,8 @@ class AppLogo extends StatelessWidget {
         26.height,
         RichTextWidget(
           list: [
-            TextSpan(text: APP_FIRST_NAME, style: boldTextStyle(size: 32, letterSpacing: 2)),
-            TextSpan(text: APP_SECOND_NAME, style: primaryTextStyle(size: 32, letterSpacing: 2)),
+            TextSpan(text: APP_FIRST_NAME, style: boldTextStyle(size: 32)),
+            // TextSpan(text: APP_SECOND_NAME, style: primaryTextStyle(size: 32, letterSpacing: 2)),
           ],
         ).center(),
         8.height,

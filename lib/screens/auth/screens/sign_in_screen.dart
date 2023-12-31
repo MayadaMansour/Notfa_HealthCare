@@ -69,7 +69,7 @@ class _SignInScreenState extends State<SignInScreen> {
       isRemember = true;
       emailCont.text = getStringAsync(USER_NAME);
       passwordCont.text = getStringAsync(USER_PASSWORD);
-      selectedIndex = getIntAsync(SELECTED_PROFILE_INDEX);
+      // selectedIndex = getIntAsync(SELECTED_PROFILE_INDEX);
     }
   }
 
@@ -94,28 +94,31 @@ class _SignInScreenState extends State<SignInScreen> {
           setValue(USER_NAME, emailCont.text);
           setValue(USER_PASSWORD, passwordCont.text);
           setValue(IS_REMEMBER_ME, true);
-          setValue(SELECTED_PROFILE_INDEX, selectedIndex);
+          // setValue(SELECTED_PROFILE_INDEX, selectedIndex);
         }
 
         getConfigurationAPI().whenComplete(() {
-          if (userStore.userRole!.toLowerCase() == UserRoleDoctor) {
-            doctorAppStore.setBottomNavIndex(0);
-            toast(locale.lblLoginSuccessfullyAsADoctor + '!! 🎉');
-            userStore.setOneSignalTag(ConstantKeys.appTypeKey, ConstantKeys.doctorAppKey);
-            DoctorDashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
-          } else if (userStore.userRole!.toLowerCase() == UserRolePatient) {
-            toast(locale.lblLoginSuccessfullyAsAPatient + '!! 🎉');
-            userStore.setOneSignalTag(ConstantKeys.appTypeKey, ConstantKeys.patientAppKey);
-            patientStore.setBottomNavIndex(0);
+          // if (userStore.userRole!.toLowerCase() == UserRoleDoctor) {
+          //   doctorAppStore.setBottomNavIndex(0);
+          //   toast(locale.lblLoginSuccessfullyAsADoctor + '!! 🎉');
+          //   userStore.setOneSignalTag(ConstantKeys.appTypeKey, ConstantKeys.doctorAppKey);
+          //   DoctorDashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
+          // } else
+          //   if (userStore.userRole!.toLowerCase() == UserRolePatient) {
+          //   toast(locale.lblLoginSuccessfullyAsAPatient + '!! 🎉');
+          //   userStore.setOneSignalTag(ConstantKeys.appTypeKey, ConstantKeys.patientAppKey);
+          //   patientStore.setBottomNavIndex(0);
             PatientDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
-          } else if (userStore.userRole!.toLowerCase() == UserRoleReceptionist) {
-            toast(locale.lblLoginSuccessfullyAsAReceptionist + '!! 🎉');
-            receptionistAppStore.setBottomNavIndex(0);
-            userStore.setOneSignalTag(ConstantKeys.appTypeKey, ConstantKeys.receptionistAppKey);
-            RDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
-          } else {
-            toast(locale.lblWrongUser);
-          }
+          // }
+          //   else if (userStore.userRole!.toLowerCase() == UserRoleReceptionist) {
+          //   toast(locale.lblLoginSuccessfullyAsAReceptionist + '!! 🎉');
+          //   receptionistAppStore.setBottomNavIndex(0);
+          //   userStore.setOneSignalTag(ConstantKeys.appTypeKey, ConstantKeys.receptionistAppKey);
+          //   RDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
+          // }
+          //   else {
+          //   toast(locale.lblWrongUser);
+          // }
           appStore.setLoading(false);
         }).catchError((r) {
           appStore.setLoading(false);
@@ -182,10 +185,10 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   return GestureDetector(
                     onTap: () {
-                      selectedIndex = index;
+                      // selectedIndex = index;
                       setState(() {});
 
-                      if (index == 0) {
+                      // if (index == 0) {
                         log(appStore.tempBaseUrl != BASE_URL);
                         if (appStore.tempBaseUrl != BASE_URL) {
                           emailCont.text = appStore.demoPatient.validate();
@@ -194,23 +197,26 @@ class _SignInScreenState extends State<SignInScreen> {
                           emailCont.text = patientEmail;
                           passwordCont.text = loginPassword;
                         }
-                      } else if (index == 1) {
-                        if (appStore.tempBaseUrl != BASE_URL) {
-                          emailCont.text = appStore.demoReceptionist.validate();
-                          passwordCont.text = loginPassword;
-                        } else {
-                          emailCont.text = receptionistEmail;
-                          passwordCont.text = loginPassword;
-                        }
-                      } else if (index == 2) {
-                        if (appStore.tempBaseUrl != BASE_URL) {
-                          emailCont.text = appStore.demoDoctor.validate();
-                          passwordCont.text = loginPassword;
-                        } else {
-                          emailCont.text = doctorEmail;
-                          passwordCont.text = loginPassword;
-                        }
-                      }
+                      // }
+
+                      // else if (index == 1) {
+                      //   if (appStore.tempBaseUrl != BASE_URL) {
+                      //     emailCont.text = appStore.demoReceptionist.validate();
+                      //     passwordCont.text = loginPassword;
+                      //   } else {
+                      //     emailCont.text = receptionistEmail;
+                      //     passwordCont.text = loginPassword;
+                      //   }
+                      // }
+                      // else if (index == 2) {
+                      //   if (appStore.tempBaseUrl != BASE_URL) {
+                      //     emailCont.text = appStore.demoDoctor.validate();
+                      //     passwordCont.text = loginPassword;
+                      //   } else {
+                      //     emailCont.text = doctorEmail;
+                      //     passwordCont.text = loginPassword;
+                      //   }
+                      // }
                     },
                     child: Container(
                       child: Image.asset(
@@ -387,12 +393,12 @@ class _SignInScreenState extends State<SignInScreen> {
                   40.height,
                   LoginRegisterWidget(
                     title: locale.lblNewMember,
-                    subTitle: locale.lblSignUp + '?',
+                    subTitle: locale.lblSignUp + '؟',
                     onTap: () {
                       SignUpScreen().launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
                     },
                   ),
-                  buildIconicWidget(),
+                  // buildIconicWidget(),
                 ],
               ),
             ),

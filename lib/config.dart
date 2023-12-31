@@ -1,6 +1,6 @@
-const APP_NAME = 'Notfa';
-const APP_FIRST_NAME = 'Notfa';
-const APP_SECOND_NAME = ' App';
+const APP_NAME = 'نُطفة';
+const APP_FIRST_NAME = 'نُطفة';
+// const APP_SECOND_NAME = ' تطبيق ';
 const APP_NAME_TAG_LINE = 'Clinic and Patient Management App';
 
 

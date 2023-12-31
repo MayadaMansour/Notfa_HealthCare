@@ -40,32 +40,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController firstNameCont = TextEditingController();
   TextEditingController lastNameCont = TextEditingController();
   TextEditingController contactNumberCont = TextEditingController();
-  TextEditingController dOBCont = TextEditingController();
+
+ TextEditingController dOBCont = TextEditingController();
   TextEditingController passwordCont = TextEditingController();
   TextEditingController confirmPasswordCont = TextEditingController();
-  TextEditingController selectedClinicCont = TextEditingController();
 
-  String? genderValue;
-  String? bloodGroup;
-  String? selectedClinic;
-  String? selectedRole;
+  // TextEditingController selectedClinicCont = TextEditingController();
 
-  Clinic? selectedClinicData;
-
+  // String? genderValue;
+  // String? bloodGroup;
+  // String? selectedClinic;
+  // String? selectedRole;
+  // Clinic? selectedClinicData;
   FocusNode emailFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
   FocusNode confirmPasswordFocus = FocusNode();
   FocusNode firstNameFocus = FocusNode();
   FocusNode lastNameFocus = FocusNode();
   FocusNode contactNumberFocus = FocusNode();
-  FocusNode dOBFocus = FocusNode();
-  FocusNode bloodGroupFocus = FocusNode();
-  FocusNode roleFocus = FocusNode();
-  FocusNode clinicFocus = FocusNode();
 
-  FocusNode genderFocus = FocusNode();
+    FocusNode dOBFocus = FocusNode();
+  // FocusNode bloodGroupFocus = FocusNode();
+  // FocusNode roleFocus = FocusNode();
+  // FocusNode clinicFocus = FocusNode();
 
-  late DateTime birthDate;
+  // FocusNode genderFocus = FocusNode();
+
+   late DateTime birthDate;
 
   bool isFirstTime = true;
 
@@ -75,8 +76,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     afterBuildCreated(() => () {
           setStatusBarColor(
-            appStore.isDarkModeOn ? context.scaffoldBackgroundColor : appPrimaryColor.withOpacity(0.02),
-            statusBarIconBrightness: appStore.isDarkModeOn ? Brightness.light : Brightness.dark,
+            appStore.isDarkModeOn
+                ? context.scaffoldBackgroundColor
+                : appPrimaryColor.withOpacity(0.02),
+            statusBarIconBrightness:
+                appStore.isDarkModeOn ? Brightness.light : Brightness.dark,
           );
         });
 
@@ -97,25 +101,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-
       appStore.setLoading(true);
-
       Map request = {
         "first_name": firstNameCont.text.validate(),
         "last_name": lastNameCont.text.validate(),
         "user_email": emailCont.text.validate(),
         "mobile_number": contactNumberCont.text.validate(),
-        "gender": genderValue.validate().toLowerCase(),
-        "dob": birthDate.getFormattedDate(SAVE_DATE_FORMAT).validate(),
+        // "gender": genderValue.validate().toLowerCase(),
+         "dob": birthDate.getFormattedDate(SAVE_DATE_FORMAT).validate(),
         "user_pass": passwordCont.text,
-        'role': selectedRole,
+        // 'role': selectedRole,
       };
-      if (selectedRole == UserRolePatient && bloodGroup.validate().isNotEmpty) {
-        request.putIfAbsent("blood_group", () => bloodGroup.validate());
-      }
-      if (selectedClinicData != null) {
-        request.putIfAbsent('clinic_id', () => selectedClinicData!.id.validate());
-      }
+
+      // if (selectedRole == UserRolePatient && bloodGroup.validate().isNotEmpty) {
+      //   request.putIfAbsent("blood_group", () => bloodGroup.validate());
+      // }
+      // if (selectedClinicData != null) {
+      //   request.putIfAbsent('clinic_id', () => selectedClinicData!.id.validate());
+      // }
 
       log('request : $request');
       await addNewUserAPI(request).then((value) async {
@@ -129,35 +132,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
         };
 
         log(req.toString());
-
         await loginAPI(req).then((value) async {
           setValue(USER_NAME, emailCont.text);
           setValue(USER_PASSWORD, passwordCont.text);
           setValue(IS_REMEMBER_ME, true);
 
           getConfigurationAPI().whenComplete(() {
-            if (userStore.userRole!.toLowerCase() == UserRoleDoctor) {
-              doctorAppStore.setBottomNavIndex(0);
-              toast(locale.lblLoginSuccessfullyAsADoctor + '!! 🎉');
-              setValue(SELECTED_PROFILE_INDEX, 2);
-              DoctorDashboardScreen().launch(context, isNewTask: true, duration: pageAnimationDuration, pageRouteAnimation: PageRouteAnimation.Slide);
-            } else if (userStore.userRole!.toLowerCase() == UserRolePatient) {
-              toast(locale.lblLoginSuccessfullyAsAPatient + '!! 🎉');
-              patientStore.setBottomNavIndex(0);
-              setValue(SELECTED_PROFILE_INDEX, 0);
-              PatientDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide, duration: pageAnimationDuration);
-            } else if (userStore.userRole!.toLowerCase() == UserRoleReceptionist) {
-              setValue(SELECTED_PROFILE_INDEX, 1);
-              receptionistAppStore.setBottomNavIndex(0);
-              toast(locale.lblLoginSuccessfullyAsAReceptionist + '!! 🎉');
-              RDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide, duration: pageAnimationDuration);
-            } else {
-              toast(locale.lblWrongUser);
-            }
+            // if (userStore.userRole!.toLowerCase() == UserRoleDoctor) {
+            //   doctorAppStore.setBottomNavIndex(0);
+            //   toast(locale.lblLoginSuccessfullyAsADoctor + '!! 🎉');
+            //   setValue(SELECTED_PROFILE_INDEX, 2);
+            //   // DoctorDashboardScreen().launch(context, isNewTask: true, duration: pageAnimationDuration, pageRouteAnimation: PageRouteAnimation.Slide);
+            // } else
+            //   if (userStore.userRole!.toLowerCase() == UserRolePatient) {
+            // toast(locale.lblLoginSuccessfullyAsAPatient + '!! 🎉');
+            // patientStore.setBottomNavIndex(0);
+            // setValue(SELECTED_PROFILE_INDEX, 0);
+            PatientDashBoardScreen().launch(context,
+                isNewTask: true,
+                pageRouteAnimation: PageRouteAnimation.Slide,
+                duration: pageAnimationDuration);
+            // }
+            //   else
+            //   if (userStore.userRole!.toLowerCase() == UserRoleReceptionist) {
+            //   setValue(SELECTED_PROFILE_INDEX, 1);
+            //   receptionistAppStore.setBottomNavIndex(0);
+            //   toast(locale.lblLoginSuccessfullyAsAReceptionist + '!! 🎉');
+            //   RDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide, duration: pageAnimationDuration);
+            // } else {
+            //   toast(locale.lblWrongUser);
+            // }
             appStore.setLoading(false);
           }).catchError((e) {
             appStore.setLoading(false);
-
             throw e;
           });
         });
@@ -182,7 +189,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SafeArea(
         child: Form(
           key: formKey,
-          autovalidateMode: isFirstTime ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
+          autovalidateMode: isFirstTime
+              ? AutovalidateMode.disabled
+              : AutovalidateMode.onUserInteraction,
           child: Stack(
             children: [
               SingleChildScrollView(
@@ -195,12 +204,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     16.height,
                     RichTextWidget(
                       list: [
-                        TextSpan(text: APP_FIRST_NAME, style: boldTextStyle(size: 32, letterSpacing: 1)),
-                        TextSpan(text: APP_SECOND_NAME, style: primaryTextStyle(size: 32, letterSpacing: 1)),
+                        TextSpan(
+                            text: APP_FIRST_NAME,
+                            style: boldTextStyle(size: 32,)),
+                        // TextSpan(
+                        //     text: APP_SECOND_NAME,
+                        //     style:
+                        //         primaryTextStyle(size: 32, letterSpacing: 1)),
                       ],
                     ).center(),
                     32.height,
-                    Text(locale.lblSignUpAsPatient, style: secondaryTextStyle(size: 14)),
+                    Text(locale.lblSignUpAsPatient,
+                        style: secondaryTextStyle(size: 14)),
                     24.height,
                     Row(
                       children: [
@@ -211,7 +226,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           focus: firstNameFocus,
                           errorThisFieldRequired: locale.lblFirstNameIsRequired,
                           nextFocus: lastNameFocus,
-                          decoration: inputDecoration(context: context, labelText: locale.lblFirstName, suffixIcon: ic_user.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
+                          decoration: inputDecoration(
+                              context: context,
+                              labelText: locale.lblFirstName,
+                              suffixIcon: ic_user
+                                  .iconImage(size: 10, color: context.iconColor)
+                                  .paddingAll(14)),
                           onFieldSubmitted: (value) {
                             lastNameFocus.requestFocus();
                           },
@@ -223,8 +243,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             textFieldType: TextFieldType.NAME,
                             focus: lastNameFocus,
                             nextFocus: emailFocus,
-                            errorThisFieldRequired: locale.lblLastNameIsRequired,
-                            decoration: inputDecoration(context: context, labelText: locale.lblLastName, suffixIcon: ic_user.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
+                            errorThisFieldRequired:
+                                locale.lblLastNameIsRequired,
+                            decoration: inputDecoration(
+                                context: context,
+                                labelText: locale.lblLastName,
+                                suffixIcon: ic_user
+                                    .iconImage(
+                                        size: 10, color: context.iconColor)
+                                    .paddingAll(14)),
                             onFieldSubmitted: (value) {
                               emailFocus.requestFocus();
                             }).expand(),
@@ -241,7 +268,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onFieldSubmitted: (value) {
                         passwordFocus.requestFocus();
                       },
-                      decoration: inputDecoration(context: context, labelText: locale.lblEmail, suffixIcon: ic_message.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
+                      decoration: inputDecoration(
+                          context: context,
+                          labelText: locale.lblEmail,
+                          suffixIcon: ic_message
+                              .iconImage(size: 10, color: context.iconColor)
+                              .paddingAll(14)),
                     ),
                     16.height,
                     Form(
@@ -256,9 +288,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             textStyle: primaryTextStyle(),
                             errorThisFieldRequired: locale.passwordIsRequired,
                             textFieldType: TextFieldType.PASSWORD,
-                            suffixPasswordVisibleWidget: ic_showPassword.iconImage(size: 10, color: context.iconColor).paddingAll(14),
-                            suffixPasswordInvisibleWidget: ic_hidePassword.iconImage(size: 10, color: context.iconColor).paddingAll(14),
-                            decoration: inputDecoration(context: context, labelText: locale.lblPassword),
+                            suffixPasswordVisibleWidget: ic_showPassword
+                                .iconImage(size: 10, color: context.iconColor)
+                                .paddingAll(14),
+                            suffixPasswordInvisibleWidget: ic_hidePassword
+                                .iconImage(size: 10, color: context.iconColor)
+                                .paddingAll(14),
+                            decoration: inputDecoration(
+                                context: context,
+                                labelText: locale.lblPassword),
                             onFieldSubmitted: (value) {
                               confirmPasswordFocus.requestFocus();
                             },
@@ -269,11 +307,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             focus: confirmPasswordFocus,
                             textStyle: primaryTextStyle(),
                             nextFocus: contactNumberFocus,
-                            errorThisFieldRequired: locale.confirmPasswordIsRequired,
+                            errorThisFieldRequired:
+                                locale.confirmPasswordIsRequired,
                             textFieldType: TextFieldType.PASSWORD,
                             validator: (value) {
-                              if (confirmPasswordCont.text.isEmpty) return locale.confirmPasswordIsRequired;
-                              if (passwordCont.text != confirmPasswordCont.text) {
+                              if (confirmPasswordCont.text.isEmpty)
+                                return locale.confirmPasswordIsRequired;
+                              if (passwordCont.text !=
+                                  confirmPasswordCont.text) {
                                 return locale.lblPwdDoesNotMatch;
                               } else {
                                 return null;
@@ -282,9 +323,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             onFieldSubmitted: (value) {
                               contactNumberFocus.requestFocus();
                             },
-                            suffixPasswordVisibleWidget: ic_showPassword.iconImage(size: 10, color: context.iconColor).paddingAll(14),
-                            suffixPasswordInvisibleWidget: ic_hidePassword.iconImage(size: 10, color: context.iconColor).paddingAll(14),
-                            decoration: inputDecoration(context: context, labelText: locale.lblConfirmPassword),
+                            suffixPasswordVisibleWidget: ic_showPassword
+                                .iconImage(size: 10, color: context.iconColor)
+                                .paddingAll(14),
+                            suffixPasswordInvisibleWidget: ic_hidePassword
+                                .iconImage(size: 10, color: context.iconColor)
+                                .paddingAll(14),
+                            decoration: inputDecoration(
+                                context: context,
+                                labelText: locale.lblConfirmPassword),
                           ),
                         ],
                       ),
@@ -294,27 +341,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       textStyle: primaryTextStyle(),
                       controller: contactNumberCont,
                       focus: contactNumberFocus,
-                      nextFocus: dOBFocus,
+                        nextFocus: dOBFocus,
                       textFieldType: TextFieldType.PHONE,
                       inputFormatters: [LengthLimitingTextInputFormatter(10)],
                       isValidationRequired: true,
                       errorThisFieldRequired: locale.contactNumberIsRequired,
-                      decoration: inputDecoration(context: context, labelText: locale.lblContactNumber, suffixIcon: ic_phone.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
+                      decoration: inputDecoration(
+                          context: context,
+                          labelText: locale.lblContactNumber,
+                          suffixIcon: ic_phone
+                              .iconImage(size: 10, color: context.iconColor)
+                              .paddingAll(14)),
                       onFieldSubmitted: (value) {
-                        dOBFocus.requestFocus();
+                          dOBFocus.requestFocus();
                       },
                     ),
                     16.height,
                     AppTextField(
                       textStyle: primaryTextStyle(),
                       controller: dOBCont,
-                      nextFocus: bloodGroupFocus,
+                      // nextFocus: bloodGroupFocus,
                       focus: dOBFocus,
                       textFieldType: TextFieldType.NAME,
                       errorThisFieldRequired: locale.lblBirthDateIsRequired,
                       readOnly: true,
                       onFieldSubmitted: (value) {
-                        if (selectedRole == UserRolePatient) bloodGroupFocus.requestFocus();
+                        // if (selectedRole == UserRolePatient) bloodGroupFocus.requestFocus();
                       },
                       onTap: () {
                         dateBottomSheet(
@@ -330,115 +382,118 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                       decoration: inputDecoration(context: context, labelText: locale.lblDOB, suffixIcon: ic_calendar.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
                     ),
-                    16.height,
-                    Row(
-                      children: [
-                        DropdownButtonFormField(
-                          icon: SizedBox.shrink(),
-                          isExpanded: true,
-                          borderRadius: radius(),
-                          focusColor: primaryColor,
-                          dropdownColor: context.cardColor,
-                          focusNode: roleFocus,
-                          autovalidateMode: isFirstTime ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value.isEmptyOrNull)
-                              return locale.roleIsRequired;
-                            else
-                              return null;
-                          },
-                          decoration: inputDecoration(context: context, labelText: locale.lblSelectRole, suffixIcon: ic_user.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
-                          onChanged: (dynamic role) {
-                            selectedRole = role;
-                            setState(() {});
-                          },
-                          items: userRoleList.map((role) {
-                            return DropdownMenuItem<String>(
-                              value: role,
-                              onTap: () {
-                                selectedRole = role;
-                                if (selectedRole == UserRolePatient)
-                                  bloodGroupFocus.requestFocus();
-                                else
-                                  clinicFocus.requestFocus();
-                                setState(() {});
-                              },
-                              child: Text(role.capitalizeEachWord(), style: primaryTextStyle()),
-                            );
-                          }).toList(),
-                        ).expand(),
-                        if (selectedRole == UserRolePatient) 16.width,
-                        if (selectedRole == UserRolePatient)
-                          DropdownButtonFormField(
-                            icon: SizedBox.shrink(),
-                            isExpanded: true,
-                            borderRadius: radius(),
-                            focusColor: primaryColor,
-                            dropdownColor: context.cardColor,
-                            focusNode: bloodGroupFocus,
-                            decoration: inputDecoration(context: context, labelText: locale.lblBloodGroup, suffixIcon: ic_arrow_down.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
-                            onChanged: (dynamic value) {
-                              bloodGroup = value;
-                            },
-                            items: bloodGroupList.map((bloodGroup) => DropdownMenuItem(value: bloodGroup, child: Text("$bloodGroup", style: primaryTextStyle()))).toList(),
-                          ).expand()
-                      ],
-                    ),
-                    16.height,
-                    AppTextField(
-                      textFieldType: TextFieldType.NAME,
-                      focus: clinicFocus,
-                      controller: selectedClinicCont,
-                      isValidationRequired: true,
-                      readOnly: true,
-                      errorThisFieldRequired: locale.clinicIdRequired,
-                      selectionControls: EmptyTextSelectionControls(),
-                      decoration: inputDecoration(
-                        context: context,
-                        labelText: locale.lblSelectClinic,
-                        suffixIcon: ic_clinic.iconImage(size: 18, color: context.iconColor).paddingAll(14),
-                      ),
-                      validator: (value) {
-                        if (selectedClinicData == null) return locale.clinicIdRequired;
-                        return null;
-                      },
-                      maxLines: 1,
-                      onTap: () {
-                        hideKeyboard(context);
-                        PatientClinicSelectionScreen(
-                          isForRegistration: true,
-                          clinicId: selectedClinicData != null ? selectedClinicData!.id.toInt() : null,
-                        ).launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
-                          if (value != null) {
-                            selectedClinicData = value;
-                            selectedClinicCont.text = selectedClinicData!.name.validate();
+                    // 16.height,
+                    // Row(
+                    //   children: [
+                    //     DropdownButtonFormField(
+                    //       icon: SizedBox.shrink(),
+                    //       isExpanded: true,
+                    //       borderRadius: radius(),
+                    //       focusColor: primaryColor,
+                    //       dropdownColor: context.cardColor,
+                    //       focusNode: roleFocus,
+                    //       autovalidateMode: isFirstTime ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
+                    //       validator: (value) {
+                    //         if (value.isEmptyOrNull)
+                    //           return locale.roleIsRequired;
+                    //         else
+                    //           return null;
+                    //       },
+                    //       decoration: inputDecoration(context: context, labelText: locale.lblSelectRole, suffixIcon: ic_user.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
+                    //       onChanged: (dynamic role) {
+                    //         selectedRole = role;
+                    //         setState(() {});
+                    //       },
+                    //       items: userRoleList.map((role) {
+                    //         return DropdownMenuItem<String>(
+                    //           value: role,
+                    //           onTap: () {
+                    //             selectedRole = role;
+                    //             if (selectedRole == UserRolePatient)
+                    //               bloodGroupFocus.requestFocus();
+                    //             else
+                    //               clinicFocus.requestFocus();
+                    //             setState(() {});
+                    //           },
+                    //           child: Text(role.capitalizeEachWord(), style: primaryTextStyle()),
+                    //         );
+                    //       }).toList(),
+                    //     ).expand(),
+                    //     if (selectedRole == UserRolePatient) 16.width,
+                    //     if (selectedRole == UserRolePatient)
+                    //       DropdownButtonFormField(
+                    //         icon: SizedBox.shrink(),
+                    //         isExpanded: true,
+                    //         borderRadius: radius(),
+                    //         focusColor: primaryColor,
+                    //         dropdownColor: context.cardColor,
+                    //         focusNode: bloodGroupFocus,
+                    //         decoration: inputDecoration(context: context, labelText: locale.lblBloodGroup, suffixIcon: ic_arrow_down.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
+                    //         onChanged: (dynamic value) {
+                    //           bloodGroup = value;
+                    //         },
+                    //         items: bloodGroupList.map((bloodGroup) => DropdownMenuItem(value: bloodGroup, child: Text("$bloodGroup", style: primaryTextStyle()))).toList(),
+                    //       ).expand()
+                    //   ],
+                    // ),
+                    // 16.height,
+                    // AppTextField(
+                    //   textFieldType: TextFieldType.NAME,
+                    //   focus: clinicFocus,
+                    //   controller: selectedClinicCont,
+                    //   isValidationRequired: true,
+                    //   readOnly: true,
+                    //   errorThisFieldRequired: locale.clinicIdRequired,
+                    //   selectionControls: EmptyTextSelectionControls(),
+                    //   decoration: inputDecoration(
+                    //     context: context,
+                    //     labelText: locale.lblSelectClinic,
+                    //     suffixIcon: ic_clinic.iconImage(size: 18, color: context.iconColor).paddingAll(14),
+                    //   ),
+                    //   validator: (value) {
+                    //     if (selectedClinicData == null) return locale.clinicIdRequired;
+                    //     return null;
+                    //   },
+                    //   maxLines: 1,
+                    //   onTap: () {
+                    //     hideKeyboard(context);
+                    //     PatientClinicSelectionScreen(
+                    //       isForRegistration: true,
+                    //       clinicId: selectedClinicData != null ? selectedClinicData!.id.toInt() : null,
+                    //     ).launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
+                    //       if (value != null) {
+                    //         selectedClinicData = value;
+                    //         selectedClinicCont.text = selectedClinicData!.name.validate();
+                    //
+                    //         setState(() {});
+                    //       } else {}
+                    //       init();
+                    //     });
+                    //   },
+                    // ),
+                    // 16.height,
+                    // GenderSelectionComponent(
+                    //   onTap: (value) {
+                    //     genderValue = value;
+                    //     setState(() {});
+                    //   },
+                    // ),
 
-                            setState(() {});
-                          } else {}
-                          init();
-                        });
-                      },
-                    ),
-                    16.height,
-                    GenderSelectionComponent(
-                      onTap: (value) {
-                        genderValue = value;
-                        setState(() {});
-                      },
-                    ),
                     60.height,
                     AppButton(
                       width: context.width(),
-                      shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
+                      shapeBorder:
+                          RoundedRectangleBorder(borderRadius: radius()),
                       color: primaryColor,
                       padding: EdgeInsets.all(16),
-                      child: Text(locale.lblSubmit, style: boldTextStyle(color: textPrimaryDarkColor)),
+                      child: Text(locale.lblSubmit,
+                          style: boldTextStyle(color: textPrimaryDarkColor)),
                       onTap: signUp,
                     ),
                     24.height,
                     LoginRegisterWidget(
                       title: locale.lblAlreadyAMember,
-                      subTitle: locale.lblLogin + " ?",
+                      subTitle: locale.lblLogin ,
                       onTap: () {
                         finish(context);
                       },
@@ -457,7 +512,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
               ),
-              Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading).center())
+              Observer(
+                  builder: (context) =>
+                      LoaderWidget().visible(appStore.isLoading).center())
             ],
           ),
         ),

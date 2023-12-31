@@ -453,7 +453,7 @@ class LanguageAr extends BaseLanguage {
   String get lblWalkThroughGetStartedButton => 'البدء';
 
   @override
-  String get lblSignIn => 'تسجيل الدخول';
+  String get lblSignIn => ' الدخول';
 
   @override
   String get lblLogOut => 'تسجيل خروج';
@@ -498,7 +498,7 @@ class LanguageAr extends BaseLanguage {
   String get lblContactNumber => ' الهاتف';
 
   @override
-  String get lblDOB => 'الميعاد';
+  String get lblDOB => 'تاريخ الميلاد';
 
   @override
   String get lblSelectBloodGroup => 'حدد الدور';
@@ -585,7 +585,7 @@ class LanguageAr extends BaseLanguage {
   String get lblAlreadyAMember => 'تم التسجيل من قبل';
 
   @override
-  String get lblLogin => 'تسجيل الدخول';
+  String get lblLogin => 'تسجيل الدخول؟';
 
   @override
   String get lblDashboard => 'لوحة التحكم';
