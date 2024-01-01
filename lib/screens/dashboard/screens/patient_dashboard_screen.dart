@@ -14,6 +14,8 @@ import 'package:kivicare_flutter/utils/constants.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../chat/ui/chat_screen.dart';
+
 class PatientDashBoardScreen extends StatefulWidget {
   @override
   _PatientDashBoardScreenState createState() => _PatientDashBoardScreenState();
@@ -33,7 +35,8 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
     afterBuildCreated(() {
       View.of(context).platformDispatcher.onPlatformBrightnessChanged = () {
         if (getIntAsync(THEME_MODE_INDEX) == THEME_MODE_SYSTEM) {
-          appStore.setDarkMode(MediaQuery.of(context).platformBrightness == Brightness.light);
+          appStore.setDarkMode(
+              MediaQuery.of(context).platformBrightness == Brightness.light);
         }
       };
     });
@@ -44,6 +47,7 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
       if (showDashboard) PatientDashBoardFragment(),
       if (showAppointment) PatientAppointmentFragment(),
       FeedFragment(),
+      ChatScreen(),
       SettingFragment(),
     ];
   }
@@ -66,8 +70,10 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
     return DoublePressBackWidget(
       child: Observer(
         builder: (context) {
-          if (patientStore.bottomNavIndex >= getScreens().length) patientStore.setBottomNavIndex(getScreens().length - 1);
-          Color disableIconColor = appStore.isDarkModeOn ? Colors.white : secondaryTxtColor;
+          if (patientStore.bottomNavIndex >= getScreens().length)
+            patientStore.setBottomNavIndex(getScreens().length - 1);
+          Color disableIconColor =
+              appStore.isDarkModeOn ? Colors.white : secondaryTxtColor;
           return Scaffold(
             appBar: patientStore.bottomNavIndex != getScreens().length - 1
                 ? appBarWidget(
@@ -77,8 +83,12 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
                     color: context.scaffoldBackgroundColor,
                     elevation: 0,
                     systemUiOverlayStyle: defaultSystemUiOverlayStyle(context,
-                        color: appStore.isDarkModeOn ? context.scaffoldBackgroundColor : appPrimaryColor.withOpacity(0.02),
-                        statusBarIconBrightness: appStore.isDarkModeOn ? Brightness.light : Brightness.dark),
+                        color: appStore.isDarkModeOn
+                            ? context.scaffoldBackgroundColor
+                            : appPrimaryColor.withOpacity(0.02),
+                        statusBarIconBrightness: appStore.isDarkModeOn
+                            ? Brightness.light
+                            : Brightness.dark),
                     actions: [
                       DashboardTopProfileWidget(
                         refreshCallback: () => setState(() {}),
@@ -94,7 +104,8 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
                 data: NavigationBarThemeData(
                   backgroundColor: context.primaryColor.withOpacity(0.02),
                   indicatorColor: context.primaryColor.withOpacity(0.1),
-                  labelTextStyle: MaterialStateProperty.all(primaryTextStyle(size: 10)),
+                  labelTextStyle:
+                      MaterialStateProperty.all(primaryTextStyle(size: 10)),
                   surfaceTintColor: Colors.transparent,
                   shadowColor: Colors.transparent,
                 ),
@@ -107,25 +118,60 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
                   destinations: [
                     if (showDashboard)
                       NavigationDestination(
-                        icon: Image.asset(ic_dashboard, height: iconSize, width: iconSize, color: disableIconColor),
+                        icon: Image.asset(ic_dashboard,
+                            height: iconSize,
+                            width: iconSize,
+                            color: disableIconColor),
                         label: locale.lblPatientDashboard,
-                        selectedIcon: Image.asset(ic_dashboard, height: iconSize, width: iconSize, color: primaryColor),
+                        selectedIcon: Image.asset(ic_dashboard,
+                            height: iconSize,
+                            width: iconSize,
+                            color: primaryColor),
                       ),
                     if (showAppointment)
                       NavigationDestination(
-                        icon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: disableIconColor),
+                        icon: Image.asset(ic_calendar,
+                            height: iconSize,
+                            width: iconSize,
+                            color: disableIconColor),
                         label: locale.lblAppointments,
-                        selectedIcon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: primaryColor),
+                        selectedIcon: Image.asset(ic_calendar,
+                            height: iconSize,
+                            width: iconSize,
+                            color: primaryColor),
                       ),
                     NavigationDestination(
-                      icon: Image.asset(ic_document, height: iconSize, width: iconSize, color: disableIconColor),
+                      icon: Image.asset(ic_document,
+                          height: iconSize,
+                          width: iconSize,
+                          color: disableIconColor),
                       label: locale.lblFeedsAndArticles,
-                      selectedIcon: Image.asset(ic_document, height: iconSize, width: iconSize, color: primaryColor),
+                      selectedIcon: Image.asset(ic_document,
+                          height: iconSize,
+                          width: iconSize,
+                          color: primaryColor),
                     ),
                     NavigationDestination(
-                      icon: Image.asset(ic_more_item, height: iconSize, width: iconSize, color: disableIconColor),
+                      icon: Image.asset(ic_chat,
+                          height: iconSize,
+                          width: iconSize,
+                          color: disableIconColor),
+                      label: locale.lblChat,
+                      selectedIcon: Image.asset(ic_chat,
+                          height: iconSize,
+                          width: iconSize,
+                          color: primaryColor),
+                    ),
+                    NavigationDestination(
+                      icon: Image.asset(ic_more_item,
+                          height: iconSize,
+                          width: iconSize,
+                          color: disableIconColor),
                       label: locale.lblSettings,
-                      selectedIcon: Image.asset(ic_more_item, height: iconSize, width: iconSize, color: primaryColor),
+                      selectedIcon: Image.asset(ic_more_item,
+                          height: iconSize,
+                          width: iconSize,
+                          color: primaryColor),
                     ),
                   ],
                   onDestinationSelected: (index) {

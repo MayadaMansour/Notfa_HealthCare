@@ -637,6 +637,7 @@ abstract class BaseLanguage {
   String get lblPostalCode;
 
   String get lblSettings;
+  String get lblChat;
 
   String get lblChangePassword;
 

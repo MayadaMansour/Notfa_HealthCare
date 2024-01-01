@@ -1941,4 +1941,8 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get lblSomethingWentWrong => 'Something Went Wrong!';
+
+  @override
+  // TODO: implement lblChat
+  String get lblChat => "Chat";
 }
