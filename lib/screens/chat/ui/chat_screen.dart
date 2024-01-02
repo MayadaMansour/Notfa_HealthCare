@@ -49,11 +49,11 @@ class ChatScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ChatRoom(),
-                              ));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => ChatRoom(),
+                          //     ));
                         },
                         child: Card(
                           margin: EdgeInsets.only(bottom: 15),

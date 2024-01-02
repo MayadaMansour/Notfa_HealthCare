@@ -71,10 +71,10 @@ dependencies:
   flutter_stripe: ^9.5.0+1
 
   #Chat
-  flutter_chat_ui: ^1.6.10
-  mime: ^1.0.4
-  open_filex: ^4.3.4
-  uuid: ^4.2.1
+  #flutter_chat_ui: ^1.6.10
+  #mime: ^1.0.4
+  #open_filex: ^4.3.4
+  #uuid: ^4.2.1
 
   flutter_localizations:
     sdk: flutter

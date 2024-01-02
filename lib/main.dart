@@ -72,9 +72,9 @@ void main() async {
   appBarBackgroundColorGlobal = primaryColor;
   appButtonBackgroundColorGlobal = primaryColor;
 
-  defaultAppButtonTextColorGlobal = Colors.white;
+  // defaultAppButtonTextColorGlobal = Colors.white;
   defaultLoaderAccentColorGlobal = primaryColor;
-
+  defaultAppButtonTextColorGlobal = Colors.white;
   await initialize(aLocaleLanguageList: languageList());
 
   Firebase.initializeApp(options: DefaultFirebaseConfig.platformOptions).then((value) {
