@@ -130,7 +130,7 @@ class LanguageAr extends BaseLanguage {
   String get lblNoProblemFound => "لا يوجد مشاكل";
 
   @override
-  String get lblBookAppointment => "موعد الكتاب";
+  String get lblBookAppointment => " الحجز";
 
   @override
   String get lblDoYouWantToUpdateEncounter => "هل تريد تحديث الموعد؟";
