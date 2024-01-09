@@ -19,10 +19,17 @@ dependencies:
 
   firebase_crashlytics: ^3.4.5
   firebase_analytics: ^10.7.1
-
   firebase_remote_config: ^4.3.5
-  google_fonts: ^6.1.0
+  google_fonts:
   moment_dart: ^1.1.0
+  auth_buttons: ^3.0.2
+  sign_in_button: ^3.0.0
+  google_sign_in: ^6.1.4
+
+
+
+
+
 
   #State Management Technique
   mobx: ^2.2.1

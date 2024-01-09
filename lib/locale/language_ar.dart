@@ -1945,6 +1945,11 @@ class LanguageAr extends BaseLanguage {
   String get lblSomethingWentWrong => 'حدث خطأ ما';
 
   @override
-  // TODO: implement lblChat
   String get lblChat => "محادثه";
+
+  @override
+  String get lblFaceBookSignUp => "تسجيل الدخول بالفيسبوك";
+
+  @override
+  String get lblGoogleSignUp => "تسجيل الدخول بجوجل";
 }

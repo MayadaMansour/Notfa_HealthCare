@@ -81,7 +81,7 @@ void main() async {
     setupRemoteConfig();
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   });
-
+//4FCaqYrnuohS  ahmed.elzemrany@accuriva.com
   appStore.setLanguage(getStringAsync(SELECTED_LANGUAGE_CODE, defaultValue: DEFAULT_LANGUAGE));
   appStore.setLoggedIn(getBoolAsync(IS_LOGGED_IN));
 

@@ -26,7 +26,8 @@ import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:kivicare_flutter/utils/one_signal_notifications.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:auth_buttons/auth_buttons.dart'
+    show AuthButtonGroup, AuthButtonStyle, AuthButtonType, AuthIconType, FacebookAuthButton, GoogleAuthButton;
 import '../components/forgot_password_dailog_component.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -48,7 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   List<DemoLoginModel> demoLoginData = demoLoginList();
 
-  int? selectedIndex;
+  // int? selectedIndex;
 
   @override
   void initState() {
@@ -69,7 +70,7 @@ class _SignInScreenState extends State<SignInScreen> {
       isRemember = true;
       emailCont.text = getStringAsync(USER_NAME);
       passwordCont.text = getStringAsync(USER_PASSWORD);
-      // selectedIndex = getIntAsync(SELECTED_PROFILE_INDEX);
+       // selectedIndex = getIntAsync(SELECTED_PROFILE_INDEX);
     }
   }
 
@@ -94,7 +95,7 @@ class _SignInScreenState extends State<SignInScreen> {
           setValue(USER_NAME, emailCont.text);
           setValue(USER_PASSWORD, passwordCont.text);
           setValue(IS_REMEMBER_ME, true);
-          // setValue(SELECTED_PROFILE_INDEX, selectedIndex);
+           // setValue(SELECTED_PROFILE_INDEX, selectedIndex);
         }
 
         getConfigurationAPI().whenComplete(() {
@@ -119,7 +120,7 @@ class _SignInScreenState extends State<SignInScreen> {
           //   else {
           //   toast(locale.lblWrongUser);
           // }
-          appStore.setLoading(false);
+          // appStore.setLoading(false);
         }).catchError((r) {
           appStore.setLoading(false);
           setState(() {});
@@ -181,14 +182,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 spacing: 16,
                 itemBuilder: (context, index) {
                   DemoLoginModel data = demoLoginData[index];
-                  bool isSelected = selectedIndex == index;
+                  // bool isSelected = selectedIndex == index;
 
                   return GestureDetector(
                     onTap: () {
-                      // selectedIndex = index;
+                       // selectedIndex = index;
                       setState(() {});
 
-                      // if (index == 0) {
+                       // if (index == 0) {
                         log(appStore.tempBaseUrl != BASE_URL);
                         if (appStore.tempBaseUrl != BASE_URL) {
                           emailCont.text = appStore.demoPatient.validate();
@@ -224,15 +225,15 @@ class _SignInScreenState extends State<SignInScreen> {
                         height: 22,
                         width: 22,
                         fit: BoxFit.cover,
-                        color: isSelected ? white : appSecondaryColor,
+                        // color: isSelected ? white : appSecondaryColor,
                       ),
                       decoration: boxDecorationWithRoundedCorners(
                         boxShape: BoxShape.circle,
-                        backgroundColor: isSelected
-                            ? appSecondaryColor
-                            : appStore.isDarkModeOn
-                                ? cardDarkColor
-                                : white,
+                        // backgroundColor: isSelected
+                        //     ? appSecondaryColor
+                        //     : appStore.isDarkModeOn
+                        //         ? cardDarkColor
+                        //         : white,
                       ),
                       padding: EdgeInsets.all(12),
                     ),
@@ -254,24 +255,26 @@ class _SignInScreenState extends State<SignInScreen> {
                       appStore.isDarkModeOn ? context.scaffoldBackgroundColor : appPrimaryColor.withOpacity(0.02),
                       statusBarIconBrightness: appStore.isDarkModeOn ? Brightness.light : Brightness.dark,
                     );
-                    if (selectedIndex == null) {
-                      selectedIndex = 0;
-                      setState(() {});
-                    }
+                    // if (selectedIndex == null) {
+                    //   // selectedIndex = 0;
+                    //   setState(() {});
+                    // }
                     if (value ?? false) {
-                      if (selectedIndex == 0) {
+                      // if (selectedIndex == 0) {
                         emailCont.text = appStore.demoPatient.validate();
                         passwordCont.text = loginPassword;
                         userStore.setUserEmail(emailCont.text);
-                      } else if (selectedIndex == 1) {
-                        emailCont.text = appStore.demoReceptionist.validate();
-                        passwordCont.text = loginPassword;
-                        userStore.setUserEmail(emailCont.text);
-                      } else if (selectedIndex == 2) {
-                        emailCont.text = appStore.demoDoctor.validate();
-                        passwordCont.text = loginPassword;
-                        userStore.setUserEmail(emailCont.text);
-                      }
+                      // }
+                      // else if (selectedIndex == 1) {
+                      //   emailCont.text = appStore.demoReceptionist.validate();
+                      //   passwordCont.text = loginPassword;
+                      //   userStore.setUserEmail(emailCont.text);
+                      // }
+                      // else if (selectedIndex == 2) {
+                      //   emailCont.text = appStore.demoDoctor.validate();
+                      //   passwordCont.text = loginPassword;
+                      //   userStore.setUserEmail(emailCont.text);
+                      // }
                     }
                   });
                 },
@@ -390,6 +393,21 @@ class _SignInScreenState extends State<SignInScreen> {
                     padding: EdgeInsets.all(16),
                     child: Text(locale.lblSignIn, style: boldTextStyle(color: textPrimaryDarkColor)),
                   ),
+                  40.height,
+                  GoogleAuthButton(
+                    onPressed: () {},
+                    style: AuthButtonStyle(
+                      iconType: AuthIconType.secondary,
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  FacebookAuthButton(
+                    onPressed: () {},
+                    style: AuthButtonStyle(
+                      iconType: AuthIconType.secondary,
+                    ),
+                  ),
+
                   40.height,
                   LoginRegisterWidget(
                     title: locale.lblNewMember,

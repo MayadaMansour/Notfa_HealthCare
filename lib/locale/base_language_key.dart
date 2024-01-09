@@ -617,6 +617,9 @@ abstract class BaseLanguage {
   String get lblOtherDetails;
 
   String get lblSubmit;
+  String get lblFaceBookSignUp;
+  String get lblGoogleSignUp;
+
 
   String get lblFirstName;
 

@@ -21,6 +21,9 @@ const ic_document = "images/icons/document.png";
 
 const ic_chat = "images/icons/chat.png";
 
+const ic_facebook = "images/icons/facebook.png";
+const ic_google = "images/icons/google.png";
+
 const ic_document_fill = "images/icons/documentFill.png";
 const ic_user = "images/icons/user.png";
 const ic_profile_fill = "images/icons/profileFill.png";

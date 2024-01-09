@@ -2,20 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
-import 'package:kivicare_flutter/components/gender_selection_component.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
 import 'package:kivicare_flutter/config.dart';
 import 'package:kivicare_flutter/main.dart';
-import 'package:kivicare_flutter/model/clinic_list_model.dart';
 import 'package:kivicare_flutter/network/google_repository.dart';
 import 'package:kivicare_flutter/network/patient_list_repository.dart';
 import 'package:kivicare_flutter/screens/auth/components/login_register_widget.dart';
-import 'package:kivicare_flutter/screens/dashboard/screens/doctor_dashboard_screen.dart';
 import 'package:kivicare_flutter/screens/dashboard/screens/patient_dashboard_screen.dart';
-import 'package:kivicare_flutter/screens/dashboard/screens/receptionist_dashboard_screen.dart';
-import 'package:kivicare_flutter/screens/patient/screens/patient_clinic_selection_screen.dart';
 import 'package:kivicare_flutter/utils/app_common.dart';
-import 'package:kivicare_flutter/utils/app_widgets.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:kivicare_flutter/utils/common.dart';
 import 'package:kivicare_flutter/utils/constants.dart';
@@ -24,8 +18,23 @@ import 'package:kivicare_flutter/utils/extensions/string_extensions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:kivicare_flutter/utils/one_signal_notifications.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import '../../../network/auth_repository.dart';
+import 'package:auth_buttons/auth_buttons.dart'
+    show
+        AuthButtonGroup,
+        AuthButtonStyle,
+        AuthButtonType,
+        AuthIconType,
+        FacebookAuthButton,
+        GoogleAuthButton;
+
+import 'dart:async';
+import 'dart:convert' show json;
+import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
+
+import '../components/login_api.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -33,6 +42,10 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  GoogleSignInAccount? _currentUser;
+  bool _isAuthorized = false; // has granted permissions?
+  String _contactText = '';
+
   GlobalKey<FormState> formKey = GlobalKey();
   GlobalKey<FormState> passwordFormKey = GlobalKey();
 
@@ -41,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController lastNameCont = TextEditingController();
   TextEditingController contactNumberCont = TextEditingController();
 
- TextEditingController dOBCont = TextEditingController();
+  TextEditingController dOBCont = TextEditingController();
   TextEditingController passwordCont = TextEditingController();
   TextEditingController confirmPasswordCont = TextEditingController();
 
@@ -59,21 +72,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
   FocusNode lastNameFocus = FocusNode();
   FocusNode contactNumberFocus = FocusNode();
 
-    FocusNode dOBFocus = FocusNode();
+  FocusNode dOBFocus = FocusNode();
+
   // FocusNode bloodGroupFocus = FocusNode();
   // FocusNode roleFocus = FocusNode();
   // FocusNode clinicFocus = FocusNode();
-
+  //
   // FocusNode genderFocus = FocusNode();
 
-   late DateTime birthDate;
+  late DateTime birthDate;
 
   bool isFirstTime = true;
 
   @override
   void initState() {
     super.initState();
-
     afterBuildCreated(() => () {
           setStatusBarColor(
             appStore.isDarkModeOn
@@ -85,6 +98,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
         });
 
     init();
+  }
+
+  Future googleSignIn() async {
+    try {
+      final user = await GoogleSignInService.login();
+      await user?.authentication;
+      log(user!.displayName.toString());
+      log(user.email);
+      log(user.id);
+      log(user.photoUrl.toString());
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Column(
+          children: [
+            Text(
+                "Name: ${user.displayName}\nEmail: ${user.email}\nId: ${user.id}\nPhotoUrl: ${user.photoUrl}"),
+            Image.network(user.photoUrl.toString()),
+          ],
+        )));
+      }
+    } catch (exception) {
+      log(exception.toString());
+    }
   }
 
   void init() async {}
@@ -108,7 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         "user_email": emailCont.text.validate(),
         "mobile_number": contactNumberCont.text.validate(),
         // "gender": genderValue.validate().toLowerCase(),
-         "dob": birthDate.getFormattedDate(SAVE_DATE_FORMAT).validate(),
+        "dob": birthDate.getFormattedDate(SAVE_DATE_FORMAT).validate(),
         "user_pass": passwordCont.text,
         // 'role': selectedRole,
       };
@@ -143,7 +179,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             //   toast(locale.lblLoginSuccessfullyAsADoctor + '!! 🎉');
             //   setValue(SELECTED_PROFILE_INDEX, 2);
             //   // DoctorDashboardScreen().launch(context, isNewTask: true, duration: pageAnimationDuration, pageRouteAnimation: PageRouteAnimation.Slide);
-            // } else
+            // }
+            // else
             //   if (userStore.userRole!.toLowerCase() == UserRolePatient) {
             // toast(locale.lblLoginSuccessfullyAsAPatient + '!! 🎉');
             // patientStore.setBottomNavIndex(0);
@@ -159,10 +196,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             //   receptionistAppStore.setBottomNavIndex(0);
             //   toast(locale.lblLoginSuccessfullyAsAReceptionist + '!! 🎉');
             //   RDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide, duration: pageAnimationDuration);
-            // } else {
+            // }
+            //   else {
             //   toast(locale.lblWrongUser);
             // }
-            appStore.setLoading(false);
+            // appStore.setLoading(false);
           }).catchError((e) {
             appStore.setLoading(false);
             throw e;
@@ -206,7 +244,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       list: [
                         TextSpan(
                             text: APP_FIRST_NAME,
-                            style: boldTextStyle(size: 32,)),
+                            style: boldTextStyle(
+                              size: 32,
+                            )),
                         // TextSpan(
                         //     text: APP_SECOND_NAME,
                         //     style:
@@ -341,7 +381,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       textStyle: primaryTextStyle(),
                       controller: contactNumberCont,
                       focus: contactNumberFocus,
-                        nextFocus: dOBFocus,
+                      nextFocus: dOBFocus,
                       textFieldType: TextFieldType.PHONE,
                       inputFormatters: [LengthLimitingTextInputFormatter(10)],
                       isValidationRequired: true,
@@ -353,7 +393,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               .iconImage(size: 10, color: context.iconColor)
                               .paddingAll(14)),
                       onFieldSubmitted: (value) {
-                          dOBFocus.requestFocus();
+                        dOBFocus.requestFocus();
                       },
                     ),
                     16.height,
@@ -365,22 +405,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       textFieldType: TextFieldType.NAME,
                       errorThisFieldRequired: locale.lblBirthDateIsRequired,
                       readOnly: true,
-                      onFieldSubmitted: (value) {
-                        // if (selectedRole == UserRolePatient) bloodGroupFocus.requestFocus();
-                      },
+                      // onFieldSubmitted: (value) {
+                      //    if (selectedRole == UserRolePatient) bloodGroupFocus.requestFocus();
+                      // },
                       onTap: () {
                         dateBottomSheet(
                           context,
                           onBirthDateSelected: (selectedBirthDate) {
                             if (selectedBirthDate != null) {
-                              dOBCont.text = DateFormat(SAVE_DATE_FORMAT).format(selectedBirthDate);
+                              dOBCont.text = DateFormat(SAVE_DATE_FORMAT)
+                                  .format(selectedBirthDate);
                               birthDate = selectedBirthDate;
                               setState(() {});
                             }
                           },
                         );
                       },
-                      decoration: inputDecoration(context: context, labelText: locale.lblDOB, suffixIcon: ic_calendar.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
+                      decoration: inputDecoration(
+                          context: context,
+                          labelText: locale.lblDOB,
+                          suffixIcon: ic_calendar
+                              .iconImage(size: 10, color: context.iconColor)
+                              .paddingAll(14)),
                     ),
                     // 16.height,
                     // Row(
@@ -479,7 +525,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     //   },
                     // ),
 
-                    60.height,
+                    40.height,
                     AppButton(
                       width: context.width(),
                       shapeBorder:
@@ -490,10 +536,50 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           style: boldTextStyle(color: textPrimaryDarkColor)),
                       onTap: signUp,
                     ),
+                    40.height,
+                    AppButton(
+                      width: context.width(),
+                      color: Colors.white,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image(
+                            image: AssetImage(ic_facebook),
+                            width: 35,
+                            height: 28,
+                          ),
+                          Text(locale.lblFaceBookSignUp,
+                              style: boldTextStyle(color: Colors.black)),
+                        ],
+                      ),
+                      // onTap: googleSignIn,
+                    ),
+
+                    SizedBox(
+                      height: 10,
+                    ),
+                    AppButton(
+                      width: context.width(),
+                      color: Colors.white,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image(
+                            image: AssetImage(ic_google),
+                            width: 30,
+                            height: 25,
+                          ),
+                          Text(locale.lblGoogleSignUp,
+                              style: boldTextStyle(color: Colors.black)),
+                        ],
+                      ),
+                      onTap: googleSignIn,
+                    ),
+
                     24.height,
                     LoginRegisterWidget(
                       title: locale.lblAlreadyAMember,
-                      subTitle: locale.lblLogin ,
+                      subTitle: locale.lblLogin,
                       onTap: () {
                         finish(context);
                       },

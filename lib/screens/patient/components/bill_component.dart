@@ -84,7 +84,7 @@ class BillComponent extends StatelessWidget {
                   topRight: showEncounterDashboard ? Radius.zero : Radius.circular(defaultRadius),
                   bottomRight: showEncounterDashboard ? Radius.zero : Radius.circular(defaultRadius),
                 ),
-                icon: FontAwesomeIcons.moneyBillTransfer,
+                // icon: FontAwesomeIcons.moneyBillTransfer,
                 label: locale.lblBill,
               ),
             if (showEncounterDashboard)
@@ -109,7 +109,7 @@ class BillComponent extends StatelessWidget {
                   }
                 },
                 backgroundColor: appSecondaryColor,
-                icon: FontAwesomeIcons.gaugeHigh,
+                 icon: FontAwesomeIcons.gaugeHigh,
                 foregroundColor: Colors.white,
                 padding: EdgeInsets.all(8),
                 label: locale.lblEncounter,

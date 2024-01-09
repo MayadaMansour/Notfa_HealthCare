@@ -47,7 +47,7 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
       if (showDashboard) PatientDashBoardFragment(),
       if (showAppointment) PatientAppointmentFragment(),
       FeedFragment(),
-      ChatScreen(),
+     // ChatScreen(),
       SettingFragment(),
     ];
   }
@@ -151,17 +151,17 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
                           width: iconSize,
                           color: primaryColor),
                     ),
-                    NavigationDestination(
-                      icon: Image.asset(ic_chat,
-                          height: iconSize,
-                          width: iconSize,
-                          color: disableIconColor),
-                      label: locale.lblChat,
-                      selectedIcon: Image.asset(ic_chat,
-                          height: iconSize,
-                          width: iconSize,
-                          color: primaryColor),
-                    ),
+                    // NavigationDestination(
+                    //   icon: Image.asset(ic_chat,
+                    //       height: iconSize,
+                    //       width: iconSize,
+                    //       color: disableIconColor),
+                    //   label: locale.lblChat,
+                    //   selectedIcon: Image.asset(ic_chat,
+                    //       height: iconSize,
+                    //       width: iconSize,
+                    //       color: primaryColor),
+                    // ),
                     NavigationDestination(
                       icon: Image.asset(ic_more_item,
                           height: iconSize,
@@ -177,6 +177,9 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
                   onDestinationSelected: (index) {
                     patientStore.setBottomNavIndex(index);
                     setState(() {});
+                    // Notfa-receptionist@notfa.care
+                    //
+                    // z3fTRnxGsE0P
                   },
                 ),
               ),

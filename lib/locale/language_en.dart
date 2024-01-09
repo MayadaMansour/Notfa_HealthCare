@@ -1943,6 +1943,13 @@ class LanguageEn extends BaseLanguage {
   String get lblSomethingWentWrong => 'Something Went Wrong!';
 
   @override
-  // TODO: implement lblChat
   String get lblChat => "Chat";
+
+  @override
+  // TODO: implement lblFaceBookSignUp
+  String get lblFaceBookSignUp => "SignUp With Facebook";
+
+  @override
+  // TODO: implement lblGoogleSignUp
+  String get lblGoogleSignUp => "SignUp With Google";
 }
