@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
+import 'package:social_sign_in/social_sign_in.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
@@ -19,22 +24,11 @@ import 'package:kivicare_flutter/utils/images.dart';
 import 'package:kivicare_flutter/utils/one_signal_notifications.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../../network/auth_repository.dart';
-import 'package:auth_buttons/auth_buttons.dart'
-    show
-        AuthButtonGroup,
-        AuthButtonStyle,
-        AuthButtonType,
-        AuthIconType,
-        FacebookAuthButton,
-        GoogleAuthButton;
-
-import 'dart:async';
-import 'dart:convert' show json;
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
-
+import '../components/facebook.dart';
 import '../components/login_api.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -122,6 +116,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
       log(exception.toString());
     }
   }
+
+
+
+
+
+  Future<void> signInWithFacebook(BuildContext context) async {
+    try {
+      final LoginResult result = await FacebookAuth.instance.login();
+      if (result.status == LoginStatus.success) {
+        final AccessToken accessToken = result.accessToken!;
+        // Use the access token for further authentication or API requests
+        print('Access Token: ${accessToken.token}');
+        print('User ID: ${accessToken.userId}');
+        print('Expires: ${accessToken.expires}');
+        // print('Permissions: ${accessToken.permissions}');
+
+      } else if (result.status == LoginStatus.cancelled) {
+        print('Login cancelled by user');
+      } else {
+        print('Login failed with error: ${result.message}');
+      }
+    } catch (e) {
+      print('Login failed with error: $e');
+    }
+  }
+
 
   void init() async {}
 
@@ -537,45 +557,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onTap: signUp,
                     ),
                     40.height,
-                    AppButton(
-                      width: context.width(),
-                      color: Colors.white,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Image(
-                            image: AssetImage(ic_facebook),
-                            width: 35,
-                            height: 28,
-                          ),
-                          Text(locale.lblFaceBookSignUp,
-                              style: boldTextStyle(color: Colors.black)),
-                        ],
-                      ),
-                      // onTap: googleSignIn,
-                    ),
 
-                    SizedBox(
-                      height: 10,
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      signInWithFacebook(context);
+                    },
+                    icon: Icon(Icons.facebook),
+                    label: Text(locale.lblFaceBookSignUp,
                     ),
-                    AppButton(
-                      width: context.width(),
-                      color: Colors.white,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Image(
-                            image: AssetImage(ic_google),
-                            width: 30,
-                            height: 25,
-                          ),
-                          Text(locale.lblGoogleSignUp,
-                              style: boldTextStyle(color: Colors.black)),
-                        ],
-                      ),
-                      onTap: googleSignIn,
+                  ),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        googleSignIn();
+                      },
+                      icon: Icon(Icons.email),
+                      label: Text(locale.lblGoogleSignUp),
                     ),
-
                     24.height,
                     LoginRegisterWidget(
                       title: locale.lblAlreadyAMember,

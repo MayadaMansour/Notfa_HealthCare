@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kivicare_flutter/components/app_common_dialog.dart';
 import 'package:kivicare_flutter/components/app_logo.dart';
@@ -29,6 +30,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:auth_buttons/auth_buttons.dart'
     show AuthButtonGroup, AuthButtonStyle, AuthButtonType, AuthIconType, FacebookAuthButton, GoogleAuthButton;
 import '../components/forgot_password_dailog_component.dart';
+import '../components/login_api.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -151,6 +153,54 @@ class _SignInScreenState extends State<SignInScreen> {
         );
       },
     );
+  }
+
+  Future googleSignIn() async {
+    try {
+      final user = await GoogleSignInService.login();
+      await user?.authentication;
+      log(user!.displayName.toString());
+      log(user.email);
+      log(user.id);
+      log(user.photoUrl.toString());
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Column(
+              children: [
+                Text(
+                    "Name: ${user.displayName}\nEmail: ${user.email}\nId: ${user.id}\nPhotoUrl: ${user.photoUrl}"),
+                Image.network(user.photoUrl.toString()),
+              ],
+            )));
+      }
+    } catch (exception) {
+      log(exception.toString());
+    }
+  }
+
+
+
+
+
+  Future<void> signInWithFacebook(BuildContext context) async {
+    try {
+      final LoginResult result = await FacebookAuth.instance.login();
+      if (result.status == LoginStatus.success) {
+        final AccessToken accessToken = result.accessToken!;
+        // Use the access token for further authentication or API requests
+        print('Access Token: ${accessToken.token}');
+        print('User ID: ${accessToken.userId}');
+        print('Expires: ${accessToken.expires}');
+        // print('Permissions: ${accessToken.permissions}');
+
+      } else if (result.status == LoginStatus.cancelled) {
+        print('Login cancelled by user');
+      } else {
+        print('Login failed with error: ${result.message}');
+      }
+    } catch (e) {
+      print('Login failed with error: $e');
+    }
   }
 
   @override
@@ -394,18 +444,20 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Text(locale.lblSignIn, style: boldTextStyle(color: textPrimaryDarkColor)),
                   ),
                   40.height,
-                  GoogleAuthButton(
-                    onPressed: () {},
-                    style: AuthButtonStyle(
-                      iconType: AuthIconType.secondary,
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      signInWithFacebook(context);
+                    },
+                    icon: Icon(Icons.facebook),
+                    label: Text(locale.lblFaceBookSignUp,
                     ),
                   ),
-                  SizedBox(height: 10,),
-                  FacebookAuthButton(
-                    onPressed: () {},
-                    style: AuthButtonStyle(
-                      iconType: AuthIconType.secondary,
-                    ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      googleSignIn();
+                    },
+                    icon: Icon(Icons.email),
+                    label: Text(locale.lblGoogleSignUp),
                   ),
 
                   40.height,
