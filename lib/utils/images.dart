@@ -106,6 +106,7 @@ const icPdf = "images/filesFormat/ic_pdf.png";
 const icPng = "images/filesFormat/ic_png.png";
 const icPpt = "images/filesFormat/ic_ppt.png";
 const icTxt = "images/filesFormat/ic_txt.png";
+const icPannar = "images/filesFormat/cover.jpg";
 
 const ic_somethingWentWrong = 'images/somethingWentWrong.png';
 const ic_search = 'images/icons/ic_search.png';

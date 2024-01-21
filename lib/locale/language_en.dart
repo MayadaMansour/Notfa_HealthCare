@@ -487,7 +487,7 @@ class LanguageEn extends BaseLanguage {
   String get lblSubmit => "Submit";
 
   @override
-  String get lblFirstName => "First Name";
+  String get lblFirstName => "User Name";
 
   @override
   String get lblLastName => "Last Name";
@@ -1946,10 +1946,8 @@ class LanguageEn extends BaseLanguage {
   String get lblChat => "Chat";
 
   @override
-  // TODO: implement lblFaceBookSignUp
   String get lblFaceBookSignUp => "SignUp With Facebook";
 
   @override
-  // TODO: implement lblGoogleSignUp
   String get lblGoogleSignUp => "SignUp With Google";
 }

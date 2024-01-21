@@ -6,6 +6,8 @@ import 'package:kivicare_flutter/screens/shimmer/components/upcoming_appointment
 import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../components/slider_pannar.dart';
+
 class PatientDashboardShimmerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,6 +16,7 @@ class PatientDashboardShimmerScreen extends StatelessWidget {
       runSpacing: 16,
       spacing: 16,
       children: [
+        SliderPannar(),
         ServicesShimmerComponent().paddingTop(24),
         UpcomingAppointmentShimmerComponent(),
         TopDoctorShimmerComponent(),

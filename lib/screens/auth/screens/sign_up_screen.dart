@@ -1,10 +1,8 @@
-import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:flutter_login_facebook/flutter_login_facebook.dart';
-import 'package:social_sign_in/social_sign_in.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
@@ -25,10 +23,7 @@ import 'package:kivicare_flutter/utils/one_signal_notifications.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../../network/auth_repository.dart';
 import 'package:flutter/foundation.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import '../components/facebook.dart';
 import '../components/login_api.dart';
-import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -36,19 +31,20 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  GoogleSignInAccount? _currentUser;
-  bool _isAuthorized = false; // has granted permissions?
-  String _contactText = '';
+
+
+
+
 
   GlobalKey<FormState> formKey = GlobalKey();
   GlobalKey<FormState> passwordFormKey = GlobalKey();
 
   TextEditingController emailCont = TextEditingController();
   TextEditingController firstNameCont = TextEditingController();
-  TextEditingController lastNameCont = TextEditingController();
+  // TextEditingController lastNameCont = TextEditingController();
   TextEditingController contactNumberCont = TextEditingController();
 
-  TextEditingController dOBCont = TextEditingController();
+  // TextEditingController dOBCont = TextEditingController();
   TextEditingController passwordCont = TextEditingController();
   TextEditingController confirmPasswordCont = TextEditingController();
 
@@ -63,10 +59,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   FocusNode passwordFocus = FocusNode();
   FocusNode confirmPasswordFocus = FocusNode();
   FocusNode firstNameFocus = FocusNode();
-  FocusNode lastNameFocus = FocusNode();
+  // FocusNode lastNameFocus = FocusNode();
   FocusNode contactNumberFocus = FocusNode();
 
-  FocusNode dOBFocus = FocusNode();
+  // FocusNode dOBFocus = FocusNode();
 
   // FocusNode bloodGroupFocus = FocusNode();
   // FocusNode roleFocus = FocusNode();
@@ -116,11 +112,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       log(exception.toString());
     }
   }
-
-
-
-
-
   Future<void> signInWithFacebook(BuildContext context) async {
     try {
       final LoginResult result = await FacebookAuth.instance.login();
@@ -130,7 +121,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         print('Access Token: ${accessToken.token}');
         print('User ID: ${accessToken.userId}');
         print('Expires: ${accessToken.expires}');
-        // print('Permissions: ${accessToken.permissions}');
+        print('Permissions: ${accessToken.grantedPermissions}');
 
       } else if (result.status == LoginStatus.cancelled) {
         print('Login cancelled by user');
@@ -141,6 +132,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       print('Login failed with error: $e');
     }
   }
+
+
+
+
 
 
   void init() async {}
@@ -160,11 +155,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       appStore.setLoading(true);
       Map request = {
         "first_name": firstNameCont.text.validate(),
-        "last_name": lastNameCont.text.validate(),
+        // "last_name": lastNameCont.text.validate(),
         "user_email": emailCont.text.validate(),
         "mobile_number": contactNumberCont.text.validate(),
         // "gender": genderValue.validate().toLowerCase(),
-        "dob": birthDate.getFormattedDate(SAVE_DATE_FORMAT).validate(),
+        // "dob": birthDate.getFormattedDate(SAVE_DATE_FORMAT).validate(),
         "user_pass": passwordCont.text,
         // 'role': selectedRole,
       };
@@ -285,7 +280,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           textFieldType: TextFieldType.NAME,
                           focus: firstNameFocus,
                           errorThisFieldRequired: locale.lblFirstNameIsRequired,
-                          nextFocus: lastNameFocus,
+                          // nextFocus: lastNameFocus,
                           decoration: inputDecoration(
                               context: context,
                               labelText: locale.lblFirstName,
@@ -293,28 +288,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   .iconImage(size: 10, color: context.iconColor)
                                   .paddingAll(14)),
                           onFieldSubmitted: (value) {
-                            lastNameFocus.requestFocus();
+                            // lastNameFocus.requestFocus();
                           },
                         ).expand(),
-                        16.width,
-                        AppTextField(
-                            textStyle: primaryTextStyle(),
-                            controller: lastNameCont,
-                            textFieldType: TextFieldType.NAME,
-                            focus: lastNameFocus,
-                            nextFocus: emailFocus,
-                            errorThisFieldRequired:
-                                locale.lblLastNameIsRequired,
-                            decoration: inputDecoration(
-                                context: context,
-                                labelText: locale.lblLastName,
-                                suffixIcon: ic_user
-                                    .iconImage(
-                                        size: 10, color: context.iconColor)
-                                    .paddingAll(14)),
-                            onFieldSubmitted: (value) {
-                              emailFocus.requestFocus();
-                            }).expand(),
+                        // 16.width,
+                        // AppTextField(
+                        //     textStyle: primaryTextStyle(),
+                        //     controller: lastNameCont,
+                        //     textFieldType: TextFieldType.NAME,
+                        //     focus: lastNameFocus,
+                        //     nextFocus: emailFocus,
+                        //     errorThisFieldRequired:
+                        //         locale.lblLastNameIsRequired,
+                        //     decoration: inputDecoration(
+                        //         context: context,
+                        //         labelText: locale.lblLastName,
+                        //         suffixIcon: ic_user
+                        //             .iconImage(
+                        //                 size: 10, color: context.iconColor)
+                        //             .paddingAll(14)),
+                        //     onFieldSubmitted: (value) {
+                        //       emailFocus.requestFocus();
+                        //     }).expand(),
                       ],
                     ),
                     16.height,
@@ -401,7 +396,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       textStyle: primaryTextStyle(),
                       controller: contactNumberCont,
                       focus: contactNumberFocus,
-                      nextFocus: dOBFocus,
+                      // nextFocus: dOBFocus,
                       textFieldType: TextFieldType.PHONE,
                       inputFormatters: [LengthLimitingTextInputFormatter(10)],
                       isValidationRequired: true,
@@ -413,41 +408,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               .iconImage(size: 10, color: context.iconColor)
                               .paddingAll(14)),
                       onFieldSubmitted: (value) {
-                        dOBFocus.requestFocus();
+                        // dOBFocus.requestFocus();
                       },
                     ),
-                    16.height,
-                    AppTextField(
-                      textStyle: primaryTextStyle(),
-                      controller: dOBCont,
-                      // nextFocus: bloodGroupFocus,
-                      focus: dOBFocus,
-                      textFieldType: TextFieldType.NAME,
-                      errorThisFieldRequired: locale.lblBirthDateIsRequired,
-                      readOnly: true,
-                      // onFieldSubmitted: (value) {
-                      //    if (selectedRole == UserRolePatient) bloodGroupFocus.requestFocus();
-                      // },
-                      onTap: () {
-                        dateBottomSheet(
-                          context,
-                          onBirthDateSelected: (selectedBirthDate) {
-                            if (selectedBirthDate != null) {
-                              dOBCont.text = DateFormat(SAVE_DATE_FORMAT)
-                                  .format(selectedBirthDate);
-                              birthDate = selectedBirthDate;
-                              setState(() {});
-                            }
-                          },
-                        );
-                      },
-                      decoration: inputDecoration(
-                          context: context,
-                          labelText: locale.lblDOB,
-                          suffixIcon: ic_calendar
-                              .iconImage(size: 10, color: context.iconColor)
-                              .paddingAll(14)),
-                    ),
+                    // 16.height,
+                    // AppTextField(
+                    //   textStyle: primaryTextStyle(),
+                    //   controller: dOBCont,
+                    //   // nextFocus: bloodGroupFocus,
+                    //   focus: dOBFocus,
+                    //   textFieldType: TextFieldType.NAME,
+                    //   errorThisFieldRequired: locale.lblBirthDateIsRequired,
+                    //   readOnly: true,
+                    //   // onFieldSubmitted: (value) {
+                    //   //    if (selectedRole == UserRolePatient) bloodGroupFocus.requestFocus();
+                    //   // },
+                    //   onTap: () {
+                    //     dateBottomSheet(
+                    //       context,
+                    //       onBirthDateSelected: (selectedBirthDate) {
+                    //         if (selectedBirthDate != null) {
+                    //           dOBCont.text = DateFormat(SAVE_DATE_FORMAT)
+                    //               .format(selectedBirthDate);
+                    //           birthDate = selectedBirthDate;
+                    //           setState(() {});
+                    //         }
+                    //       },
+                    //     );
+                    //   },
+                    //   decoration: inputDecoration(
+                    //       context: context,
+                    //       labelText: locale.lblDOB,
+                    //       suffixIcon: ic_calendar
+                    //           .iconImage(size: 10, color: context.iconColor)
+                    //           .paddingAll(14)),
+                    // ),
                     // 16.height,
                     // Row(
                     //   children: [
@@ -558,6 +553,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     40.height,
 
+
                   ElevatedButton.icon(
                     onPressed: () {
                       signInWithFacebook(context);
@@ -573,7 +569,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       icon: Icon(Icons.email),
                       label: Text(locale.lblGoogleSignUp),
                     ),
-                    24.height,
+                    22.height,
                     LoginRegisterWidget(
                       title: locale.lblAlreadyAMember,
                       subTitle: locale.lblLogin,
@@ -581,7 +577,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         finish(context);
                       },
                     ),
-                    24.height,
+                    22.height,
                   ],
                 ),
               ),

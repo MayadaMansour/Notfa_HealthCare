@@ -177,11 +177,6 @@ class _SignInScreenState extends State<SignInScreen> {
       log(exception.toString());
     }
   }
-
-
-
-
-
   Future<void> signInWithFacebook(BuildContext context) async {
     try {
       final LoginResult result = await FacebookAuth.instance.login();

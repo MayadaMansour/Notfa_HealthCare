@@ -489,7 +489,7 @@ class LanguageAr extends BaseLanguage {
   String get lblSubmit => 'التسجيل';
 
   @override
-  String get lblFirstName => 'الاسم الأول';
+  String get lblFirstName => 'أسم المستخدم';
 
   @override
   String get lblLastName => 'اسم العائلة';
